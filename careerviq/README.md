@@ -1,56 +1,49 @@
-# Welcome to your Expo app 👋
+# CareerViQ
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+CareerViQ is an Android-first, frontend-only resume builder built with Expo, React Native, TypeScript, and Expo Router. Resume data is stored locally on the device; no backend, authentication service, or cloud database is configured.
 
-## Get started
+## Requirements
 
-1. Install dependencies
+- Node.js 22.13+ (SDK 58 requirement)
+- npm
+- Expo Go or Android emulator. The MMKV adapter uses native code; use a development build rather than Expo Go.
 
-   ```bash
-   npm install
-   ```
+## Install and run
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+From the repository root:
 
 ```bash
-npm run reset-project
+cd careerviq
+npm install
+npx expo install --fix
+npx expo-doctor
+npm run typecheck
+npm run lint
+npx expo start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Press `a` to open Android, or run `npm run android` with an emulator/device configured. Use `npm run web` to check the web build. Run `npm run ios` on macOS with Xcode installed.
 
-### Other setup steps
+## Dependency recovery
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+If npm reports peer-dependency conflicts, do not start with `--force` or `--legacy-peer-deps`. Use the SDK-aware resolver first:
 
-## Learn more
+```bash
+rm -rf node_modules package-lock.json
+npm install
+npx expo install --fix
+npx expo-doctor
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+If `expo install --fix` proposes a package version that differs from the pinned SDK 58 family, keep the Expo-resolved version and commit the regenerated `package-lock.json`. Always run `npm ci` after regenerating the lockfile to verify clean installs. MMKV requires native code and a development build; for Expo Go during early UI work, replace MMKV with an Expo-compatible storage adapter.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Checks
 
-## Join the community
+```bash
+npm run typecheck
+npm run lint
+npm run format:check
+npx expo-doctor
+```
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Source and setup were added on the `feat/careerviq-foundation` branch. Dependency installation and actual app launch must be verified on a machine with Node/npm and Expo available.
